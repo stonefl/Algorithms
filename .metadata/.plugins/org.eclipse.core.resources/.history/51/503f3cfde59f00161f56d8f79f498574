@@ -1,0 +1,49 @@
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
+
+public class Percolation {
+	//Union-find system
+	private WeightedQuickUnionUF quickFinder;
+	//Site array
+	private int[][] grid;
+	
+	//Constructor
+	public Percolation(int n){
+		if(n < 0){
+			throw new java.lang.IllegalArgumentException();
+		}else{
+			//build a quick finder with n*n +2, 0 is dummy source links to top row
+			//and n*n+1 is dummy sink links to last row
+			quickFinder = new WeightedQuickUnionUF(n*n+2);
+			//initialize n-by-n grid, with all sites are blocked
+			for(int i = 0; i < n; i++){
+				for(int j = 0; j < n; j++){
+					grid[i][j] = 0;
+				}
+			}
+			
+		}
+	}
+	
+	//open site(row, col) if it is not open already
+	public void open(int row, int col){
+		
+	}
+	
+	// is site (row, col) open?
+	public boolean isOpen(int row, int col){
+		
+	}
+	
+	// is site (row, col) full?
+	public boolean isFull(int row, int col){
+		
+	}
+
+	
+	
+	
+	
+}

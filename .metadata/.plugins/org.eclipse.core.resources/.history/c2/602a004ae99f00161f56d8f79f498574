@@ -1,0 +1,82 @@
+import edu.princeton.cs.algs4.StdIn;
+import edu.princeton.cs.algs4.StdOut;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
+
+public class Percolation {
+	//n
+	private int n;
+	//Union-find system
+	private WeightedQuickUnionUF quickFinder;
+	//Site array
+	private int[][] grid;
+	
+	
+	//Constructor
+	public Percolation(int nb){
+		if(n < 0){
+			throw new java.lang.IllegalArgumentException();
+		}else{
+			n = nb;
+			//build a quick finder with n*n +2, 0 is dummy source links to top row
+			//and n*n+1 is dummy sink links to last row
+			quickFinder = new WeightedQuickUnionUF(n*n+2);
+			//initialize n-by-n grid, with all sites are blocked
+			for(int i = 0; i < n; i++){
+				for(int j = 0; j < n; j++){
+					grid[i][j] = 0;
+				}
+			}
+			
+		}
+	}
+	
+	//find index with row and col
+	private int getIndex(int row, int col){
+		if(row <= 0 || row > n){
+			String errMsg = "Row index " + row + " out of bounds.";
+			throw new java.lang.IndexOutOfBoundsException(errMsg);
+		}else if(col <= 0 || col > n){
+			String errMsg = "Col indexx " + col + " out of bounds.";
+			throw new java.lang.IndexOutOfBoundsException(errMsg);
+		}else{
+			return (row - 1) * n + col;
+		}
+	}
+	
+	//open site(row, col) if it is not open already
+	public void open(int row, int col){
+		if(row <= 0 || row > n){
+			String errMsg = "Row index " + row + " out of bounds.";
+			throw new java.lang.IndexOutOfBoundsException(errMsg);
+		}else if(col <= 0 || col > n){
+			String errMsg = "Col indexx " + col + " out of bounds.";
+			throw new java.lang.IndexOutOfBoundsException(errMsg);
+		}else{
+			//set
+		}
+	}
+	
+	// is site (row, col) open?
+	public boolean isOpen(int row, int col){
+		boolean result = false;
+		return result;
+	}
+	
+	// is site (row, col) full?
+	public boolean isFull(int row, int col){
+		boolean result = false;
+		return result;
+	}
+	
+	// does the system percolate?
+	public boolean peroclate(){
+		boolean result = false;
+		return result;
+	}
+
+	
+	
+	
+	
+}
