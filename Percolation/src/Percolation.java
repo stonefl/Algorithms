@@ -1,4 +1,5 @@
 
+import edu.princeton.cs.algs4.StdOut;
 import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 
@@ -7,8 +8,10 @@ public class Percolation {
 	private int n = 0;
 	//Union-find system
 	private WeightedQuickUnionUF quickFinder;
-	//Site array
-	private int[][] sites;
+	//Auxiliary union-find system 
+	private WeightedQuickUnionUF auxQuickFinder;
+	//Site status array - note: use boolean vs. int less memory
+	private boolean[][] siteStatus;
 
 	
 	//Constructor
@@ -17,14 +20,16 @@ public class Percolation {
 			throw new java.lang.IllegalArgumentException();
 		}else{
 			n = nb;
-			//build a quick finder with n*n +1, 0 is dummy source links to top row
-			//and n*n+1 is dummy sink links to last row
+			//build a quick finder with n*n +2, 0 is the virtual top node
+			//and n*n+1 is virtual bottom node
 			quickFinder = new WeightedQuickUnionUF(n*n + 2);
+			// the auxiliary union-find system only has virtual top node
+			auxQuickFinder = new WeightedQuickUnionUF(n*n + 1);
 			//initialize n-by-n grid, with all sites are blocked
-			sites = new int[n][n];
+			siteStatus = new boolean[n][n];
 			for(int i = 0; i < n; i++){
 				for(int j = 0; j < n; j++){
-					sites[i][j] = 0;
+					siteStatus[i][j] = false;
 				}
 			}
 			
@@ -54,44 +59,49 @@ public class Percolation {
 			throw new java.lang.IndexOutOfBoundsException(errMsg);
 		}else{
 			//set site(row, col) to 1 is it is blocked
-			if(sites[row-1][col-1] == 0){
-				//Step 1: set site(row, col) to 1
-				sites[row-1][col-1] = 1;
-				//Step 2: link index of this site to dummy source, if it is at top row
+			if(!siteStatus[row-1][col-1] ){
+				//Step 1: set site(row, col) to true
+				siteStatus[row-1][col-1] = true;
+				//Step 2: link index of this site to virtual top node, if it is at top row
 				if(row == 1){
 					quickFinder.union(0, getIndex(row, col));
+					auxQuickFinder.union(0, getIndex(row, col));
 				}
 				
 				//Step 3: link this site to its open neighbors
 				if(row - 1 >= 1 && isOpen(row - 1, col)){//up
 					quickFinder.union(getIndex(row - 1, col), getIndex(row, col));
+					auxQuickFinder.union(getIndex(row - 1, col), getIndex(row, col));
 				}
 				if(row + 1 <= n && isOpen(row + 1, col)){//down
 					quickFinder.union(getIndex(row + 1, col), getIndex(row, col));
+					auxQuickFinder.union(getIndex(row + 1, col), getIndex(row, col));
 				}
 				if(col - 1 >= 1 && isOpen(row, col - 1)){//left
 					quickFinder.union(getIndex(row, col - 1), getIndex(row, col));
+					auxQuickFinder.union(getIndex(row, col - 1), getIndex(row, col));
 				}
 				if(col + 1 <= n && isOpen(row, col + 1)){//right
 					quickFinder.union(getIndex(row, col + 1), getIndex(row, col));
+					auxQuickFinder.union(getIndex(row, col + 1), getIndex(row, col));
 				}
 				
-				//link index of this site to dummy sink, if it is at bottom row
+				//link index of this site to virtual bottom node, if it is at bottom row
 				if(row == n ){
 					quickFinder.union(n*n + 1, getIndex(row, col));
 				}
-			}
-		}
+			}//end of site is blocked
+		}//end of valid inputs
 	}
 	
 	// is site (row, col) open?
 	public boolean isOpen(int row, int col){
-		return (sites[row-1][col-1] == 1);
+		return (siteStatus[row-1][col-1] );
 	}
 	
 	// is site (row, col) full?
 	public boolean isFull(int row, int col){
-		return quickFinder.connected(0, getIndex(row, col));
+		return auxQuickFinder.connected(0, getIndex(row, col));
 	}
 	
 	// does the system percolate?
@@ -99,10 +109,6 @@ public class Percolation {
 		return quickFinder.connected(0, n*n + 1);
 	}
 
-//	public static void main(String[] args) {
-//		Percolation test = new Percolation(0);
-//	}
-	
 	
 	
 }

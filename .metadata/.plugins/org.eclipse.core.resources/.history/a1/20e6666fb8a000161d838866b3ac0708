@@ -1,0 +1,34 @@
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
+
+public class Percolation {
+		//n
+		private int n = 0;
+		//Union-find system
+		private WeightedQuickUnionUF quickFinder;
+		//Site status array
+		private int[] siteStatus;
+		
+		//COnstructor
+		public Percolation(int nb){
+			if(nb <= 0){
+				throw new java.lang.IllegalArgumentException();
+			}else{
+				n = nb;
+				//build a quick finder with n*n +2, 0 is the virtual top node
+				//and n*n+1 is virtual bottom node
+				quickFinder = new WeightedQuickUnionUF(n*n + 2);
+				
+				//initialize n-by-n grid, with all sites are blocked
+				siteStatus = new int[n * n];
+				int k = 0;
+				for(int i = 0; i < n; i++){
+					for(int j = 0; j < n; j++){
+						k++;
+						siteStatus[k] = 0;
+					}
+				}
+				
+			}
+		}
+
+}
