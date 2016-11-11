@@ -1,0 +1,130 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+/**
+ *  The {@code LinkedStack} class represents a last-in-first-out (LIFO) stack of
+ *  generic items.
+ *  It supports the usual <em>push</em> and <em>pop</em> operations, along with methods
+ *  for peeking at the top item, testing if the stack is empty, and iterating through
+ *  the items in LIFO order.
+ *  <p>
+ *  This implementation uses a singly-linked list with a non-static nested class for 
+ *  linked-list nodes. 
+ *  The <em>push</em>, <em>pop</em>, <em>peek</em>, <em>size</em>, and <em>is-empty</em>
+ *  operations all take constant time in the worst case.
+ *  <p>
+ *  For additional documentation,
+ *  see <a href="http://algs4.cs.princeton.edu/13stacks">Section 1.3</a> of
+ *  <i>Algorithms, 4th Edition</i> by Robert Sedgewick and Kevin Wayne.
+ *
+ */
+
+public class LinkedStack<T> implements Iterable<T> {
+	
+	//size of the stack
+	private int n;
+	//top node of the stack
+	private Node<T> first;
+	
+	//private single-linked node class
+	private class Node<T>{
+		private T item;
+		private Node<T> next;
+	}
+	
+	/**
+	 * Initialize an empty stack;
+	 */
+	public LinkedStack(){
+		this.first = null;
+		n = 0;
+	}
+	
+	/**
+	 * Returns if this stack is empty.
+	 * @return true if this stack is empty, false otherwise
+	 */
+	public boolean isEmpty(){
+		return first == null;
+	}
+	
+	/**
+	 * Returns the number of items in this stack.
+	 * @return the number of items in this stack
+	 */
+	public int size(){
+		return n;
+	}
+	
+	/**
+	 * Adds an item to this stack.
+	 * @param item - the item to add
+	 */
+	public void push(T item){
+		//save the old top node
+		Node<T> oldFirst = first;
+		//build a new top node
+		first = new Node<T>();
+		first.item = item;
+		first.next = oldFirst;
+		//increase size by 1
+		n++;
+	}
+	
+	/**
+	 * Removes and returns the item most recently added to this stack.
+	 * @return the item most recently added
+     * @throws NoSuchElementException if this stack is empty
+	 */
+	public T pop(){
+		if(isEmpty()){
+			throw new NoSuchElementException();
+		} else {
+			//save item to return
+			T returnItem = (T) first.item;
+			//delete first node
+			first = first.next;
+			n--;
+			return returnItem;
+		}
+	}
+	
+	 /**
+     * Returns (but does not remove) the item most recently added to this stack.
+     *
+     * @return the item most recently added to this stack
+     * @throws NoSuchElementException if this stack is empty
+     */
+	public T peek(){
+		if(isEmpty()){
+			throw new NoSuchElementException();
+		} else {
+			return (T) first.item;
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	public String toString(){
+		StringBuilder s = new StringBuilder();
+		for(T it : this){
+			s.append(it + " ");
+		}
+		return s.toString();
+	}
+
+	
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+
+}
