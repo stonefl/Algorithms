@@ -3,8 +3,8 @@
 <fullyQualifiedTypeName name="edu.princeton.cs.algs4.WeightedQuickUnionUF"/>
 <fullyQualifiedTypeName name="java.lang.IndexOutOfBoundsException"/>
 <fullyQualifiedTypeName name="edu.princeton.cs.algs4.StdStats"/>
+<fullyQualifiedTypeName name="java.util.NoSuchElementException"/>
 <fullyQualifiedTypeName name="edu.princeton.cs.algs4.StdRandom"/>
 <fullyQualifiedTypeName name="edu.princeton.cs.algs4.StdIn"/>
 <fullyQualifiedTypeName name="edu.princeton.cs.algs4.StdOut"/>
-<fullyQualifiedTypeName name="java.util.NoSuchElementException"/>
 </qualifiedTypeNameHistroy>

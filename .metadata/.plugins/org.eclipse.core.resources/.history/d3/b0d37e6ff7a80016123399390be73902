@@ -1,0 +1,14 @@
+/**
+ *  The {@code Dequeue} class represents a double-ended
+ *  queue of generic items.
+ *  It supports the <em>addFirst</em>, <em>addLast</em>, <em>removeFirst</em>, <em>removeFirst</em>
+ *  operations, along with methods for testing if the queue is empty, and iterating through
+ *  the items in FIFO order.
+ *  <p>
+ *  This implementation uses a double-linked list with a nested class for
+ *  linked-list nodes. 
+ * 
+ */
+public class Dequeue<T> implements Iterable<T> {
+
+}

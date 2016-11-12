@@ -1,0 +1,17 @@
+import edu.princeton.cs.algs4.StdOut;
+
+public class TestDequeue {
+    
+    public static void main(String[] args) {
+        
+       Deque<Integer> D = new Deque<Integer>();
+       
+       //test add null item
+       D.addFirst(null);
+       
+    }
+}
+
+    
+    
+    

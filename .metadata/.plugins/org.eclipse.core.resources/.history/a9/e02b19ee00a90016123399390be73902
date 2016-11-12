@@ -1,0 +1,31 @@
+import java.util.Iterator;
+
+/**
+ *  The {@code RandomizedQueue} class represents randomized queue of generic items.
+ *  It supports the usual <em>enqueue</em> and <em>dequeue</em>
+ *  operations, along with methods for testing if the queue is empty, and iterating through
+ *  the items in random order.
+ *  <p>
+ *  This implementation uses a resizing array, which double the underlying array
+ *  when it is full and halves the underlying array when it is one-quarter full.
+ *  
+ */
+public class RandomizedQueue<T> implements Iterable<T> {
+	//queue elements
+	private T[] q;
+	//size of queue
+	private int n;
+	
+	public RandomizedQueue(){
+		q = (T[]) new Object[1];
+		n = 0;
+	}
+	
+	
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

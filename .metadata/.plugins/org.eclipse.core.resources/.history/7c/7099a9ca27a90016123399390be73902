@@ -1,0 +1,182 @@
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+
+/**
+ *  The {@code Dequeue} class represents a double-ended
+ *  queue of generic items.
+ *  It supports the <em>addFirst</em>, <em>addLast</em>, <em>removeFirst</em>, <em>removeFirst</em>
+ *  operations, along with methods for testing if the queue is empty, and iterating through
+ *  the items in FIFO order.
+ *  <p>
+ *  This implementation uses a double-linked list with a nested class for
+ *  linked-list nodes. 
+ * 
+ */
+public class Deque<T> implements Iterable<T> {
+	
+	//beginning of a queue
+	private Node<T> first;
+	//tail of the queue
+	private Node<T> last;
+	//size of the queue
+	private int n;
+	
+	//helper linked list class
+	private class Node<T>{
+		private T item;
+		private Node<T> next;
+		private Node<T> prev;
+	}
+	
+	/**
+     * Initializes an empty queue.
+     */
+	public Deque(){
+		this.first = null;
+		this.last = null;
+		this.n = 0;
+	}
+	
+	/**
+     * Returns true if this queue is empty.
+     *
+     * @return {@code true} if this queue is empty; {@code false} otherwise
+     */
+	public boolean isEmpty(){
+		return (first == null || last == null);
+	}
+	
+	/**
+     * Returns the number of items in this queue.
+     *
+     * @return the number of items in this queue
+     */
+	public int size(){
+		return n;
+	}
+	
+	/**
+	 * Add an item to the front.
+	 * @param item - the item to add
+	 */
+	public void addFirst(T item){
+		if(item == null){
+			throw new NullPointerException("Cannot insert a null item.");
+		}else{
+			//Save old first node
+			Node<T> oldFirst = first;
+			//assign first node to a new node
+			first = new Node<T>();
+			first.item = item;
+			first.prev = null;
+			first.next = oldFirst;
+			//link the old first to new first
+			//if the first item to add
+			if(oldFirst == null){
+				last = first;
+			}else{
+				oldFirst.prev = first;
+			}
+			//increase size by 1
+			n++;
+		}
+	}
+	/**
+     * Adds an item to the end.
+     *
+     * @param  item - the item to add
+     */
+	public void addLast(T item){
+		if(item == null){
+			throw new NullPointerException("Cannot insert a null item.");
+		}else{
+			//save old last node
+			Node<T> oldLast = last;
+			//assign last node to a new node
+			last = new Node<T>();
+			last.item = item;
+			last.next = null;
+			last.prev = oldLast;
+			//if the first item to add
+			if(oldLast == null){
+				first = last;
+			}else{
+				oldLast.next = last;
+			}
+			//increase size by 1
+			n++;
+		}
+			
+	}
+	
+	
+	/**
+     * Removes and returns the item from front.
+     *
+     * @return the item at the front of the queue.
+     * @throws NoSuchElementException if this queue is empty
+     */
+	public T removeFirst(){
+		if(isEmpty()){
+			throw new NoSuchElementException("Queue underflow");
+		}else{
+			//save item to return
+			T returnItem = (T) first.item;
+			//delete first node
+			first = first.next;
+			n--;
+			if(isEmpty()){
+				last = null; // to avoid loitering
+			}else{
+				first.prev = null;
+			}
+			return returnItem;
+		}
+	}
+	
+	/**
+     * Removes and returns the item from end.
+     *
+     * @return the item at the end of the queue.
+     * @throws NoSuchElementException if this queue is empty
+     */
+	public T removeLast(){
+		if(isEmpty()){
+			throw new NoSuchElementException("Queue underflow");
+		}else{
+			//save item to return
+			T returnItem = (T) last.item;
+			//delete last node
+			last = last.prev;
+			n--;
+			if(isEmpty()){
+				first = null; // to avoid loitering
+			}else{
+				last.next = null;
+			}
+			return returnItem;
+		}
+	}
+
+
+	public Iterator<T> iterator()  {
+        return new ListIterator();  
+    }
+
+    // an iterator, doesn't implement remove() since it's optional
+    private class ListIterator implements Iterator<T> {
+        private Node<T> current = first;
+
+        public boolean hasNext()  { return current != null;                     }
+        public void remove()      { throw new UnsupportedOperationException();  }
+
+        public T next() {
+            if (!hasNext()) throw new NoSuchElementException();
+            T item = (T) current.item;
+            current = current.next; 
+            return item;
+        }
+    }
+
+}

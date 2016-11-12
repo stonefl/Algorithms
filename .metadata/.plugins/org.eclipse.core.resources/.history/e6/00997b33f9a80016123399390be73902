@@ -1,0 +1,113 @@
+import java.util.Iterator;
+
+
+
+/**
+ *  The {@code Dequeue} class represents a double-ended
+ *  queue of generic items.
+ *  It supports the <em>addFirst</em>, <em>addLast</em>, <em>removeFirst</em>, <em>removeFirst</em>
+ *  operations, along with methods for testing if the queue is empty, and iterating through
+ *  the items in FIFO order.
+ *  <p>
+ *  This implementation uses a double-linked list with a nested class for
+ *  linked-list nodes. 
+ * 
+ */
+public class Dequeue<T> implements Iterable<T> {
+	
+	//beginning of a queue
+	private Node<T> first;
+	//tail of the queue
+	private Node<T> last;
+	//size of the queue
+	private int n;
+	
+	//helper linked list class
+	private class Node<T>{
+		private T item;
+		private Node<T> next;
+		private Node<T> prev;
+	}
+	
+	/**
+     * Initializes an empty queue.
+     */
+	public Dequeue(){
+		this.first = null;
+		this.last = null;
+		this.n = 0;
+	}
+	
+	/**
+     * Returns true if this queue is empty.
+     *
+     * @return {@code true} if this queue is empty; {@code false} otherwise
+     */
+	public boolean isEmpty(){
+		return first == null;
+	}
+	
+	/**
+     * Returns the number of items in this queue.
+     *
+     * @return the number of items in this queue
+     */
+	public int size(){
+		return n;
+	}
+	
+	/**
+	 * Add an item to the front.
+	 * @param item - the item to add
+	 */
+	public void addFirst(T item){
+		if(item == null){
+			throw new NullPointerException("Cannot insert a null item.");
+		}else{
+			//Save old first node
+			Node<T> oldFirst = first;
+			//assign first node to a new node
+			first = new Node<T>();
+			first.item = item;
+			first.prev = null;
+			first.next = oldFirst;
+			//link the old first to new first
+			//if the first item to add
+			if(oldFirst == null){
+				first = last;
+			}else{
+				oldFirst.prev = first;
+			}
+			//increase size by 1
+			n++;
+		}
+	}
+	/**
+     * Adds an item to the end.
+     *
+     * @param  item-the item to add
+     */
+	public void addEnd(T item){
+		//save old last node
+		Node<T> oldLast = last;
+		//assign last node to a new node
+		last = new Node<T>();
+		last.item = item;
+		last.next = null;
+		//if the first item to add
+		if(isEmpty()){
+			first = last;
+		}else{
+			oldLast.next = last;
+		}
+		//increase size by 1
+		n++;	
+	}
+
+	@Override
+	public Iterator<T> iterator() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}
